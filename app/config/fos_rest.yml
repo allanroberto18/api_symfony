@@ -1,0 +1,77 @@
+fos_rest:
+    disable_csrf_role:    ROLE_API
+    access_denied_listener:
+        # Prototype
+        name:                 ~
+    unauthorized_challenge:  null
+    param_fetcher_listener:  true
+    cache_dir:            '%kernel.cache_dir%/fos_rest'
+    allowed_methods_listener:  false
+    routing_loader:
+        default_format:       null
+        include_format:       true
+    body_converter:
+        enabled:              false
+        validate:             false
+        validation_errors_argument:  validationErrors
+    service:
+        router:               router
+        templating:           templating
+        serializer:           null
+        view_handler:         fos_rest.view_handler.default
+        inflector:            fos_rest.inflector.doctrine
+        validator:            validator
+    serializer:
+        version:              null
+        groups:               []
+        serialize_null:       false
+    view:
+        default_engine:       twig
+        force_redirects:
+            # Prototype
+            name:                 ~
+        mime_types:
+            # Prototype
+            name:                 ~
+        formats:
+            json: true
+            xml: false
+
+            # Prototype
+            name:                 ~
+        templating_formats:
+            html: false
+            # Prototype
+            name:                 ~
+        view_response_listener:  false
+        failed_validation:    400
+        empty_content:        204
+        serialize_null:       false
+        jsonp_handler:
+            callback_param:       callback
+            mime_type:            application/javascript+jsonp
+    exception:
+        enabled:              false
+        exception_controller:  null
+    body_listener:
+        default_format:       null
+        throw_exception_on_unsupported_content_type:  false
+        decoders:
+            # Prototype
+            name:                 ~
+        array_normalizer:
+            service:              null
+            forms:                false
+    format_listener:
+        enabled: true
+        rules:
+             # setting fallback_format to json means that instead of considering the next rule in case of a priority mismatch, json will be used
+            - { path: '^/', host: 'api.%domain%', priorities: ['json', 'xml'], fallback_format: json, prefer_extension: false }
+            # setting fallback_format to false means that instead of considering the next rule in case of a priority mismatch, a 406 will be caused
+            #- { path: '^/image', priorities: ['jpeg', 'gif'], fallback_format: false, prefer_extension: true }
+            # setting fallback_format to null means that in case of a priority mismatch the next rule will be considered
+            #- { path: '^/admin', methods: ['GET', 'POST'], priorities: ['xml', 'html'], fallback_format: ~, prefer_extension: false }
+            # you can specifically target the exception controller
+            - { path: '^/api', priorities: ['json', 'xml'], fallback_format: json, attributes: { _controller: FOS\RestBundle\Controller\ExceptionController }, prefer_extension: false }
+            # setting a priority to */* basically means any format will be matched
+            - { path: '^/', priorities: ['json', 'text/html', '*/*'], fallback_format: json, prefer_extension: false }

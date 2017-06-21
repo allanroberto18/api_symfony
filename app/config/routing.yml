@@ -1,0 +1,24 @@
+sms_sim:
+    resource: "@SMSSimBundle/Controller/"
+    type:     rest
+    prefix:   /api/smssim
+
+api:
+    resource: "@APIBundle/Controller/"
+    type:     rest
+    prefix:   /api
+
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /api/doc
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+# app/config/routing.yml
+fos_oauth_server_token:
+    resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"
+
+fos_oauth_server_authorize:
+    resource: "@FOSOAuthServerBundle/Resources/config/routing/authorize.xml"
+

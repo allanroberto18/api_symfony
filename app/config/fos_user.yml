@@ -1,0 +1,7 @@
+fos_user:
+    db_driver: orm
+    firewall_name: api
+    user_class: ALR\APIBundle\Entity\Usuario
+    from_email:
+        address: "contato@site.com.br"
+        sender_name: "Contato"

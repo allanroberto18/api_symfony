@@ -1,0 +1,31 @@
+jms_serializer:
+    handlers:
+        datetime:
+            default_format: "c" # ISO8601
+            default_timezone: "UTC" # defaults to whatever timezone set in php.ini or via date_default_timezone_set
+
+    property_naming:
+        separator:  _
+        lower_case: true
+
+    metadata:
+        cache: file
+        debug: "%kernel.debug%"
+        file_cache:
+            dir: "%kernel.cache_dir%/serializer"
+
+        # Example:
+        # class: My\FooBundle\Entity\User
+        # expected path: @MyFooBundle/Resources/config/serializer/Entity.User.(yml|xml|php)
+        auto_detection: true
+
+    expression_evaluator:
+        id: jms_serializer.expression_evaluator # auto detected
+
+    visitors:
+        json:
+            options: 0 # json_encode options bitmask
+        xml:
+            doctype_whitelist:
+                - '<!DOCTYPE authorized SYSTEM "http://some_url">' # an authorized document type for xml deserialization
+            format_output: true
